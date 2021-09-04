@@ -9,7 +9,10 @@ from flask_ngrok import run_with_ngrok
 import nltk
 from keras.models import load_model
 from nltk.stem import WordNetLemmatizer
-from keras.optimizers import SGD
+from tensorflow.keras.optimizers import SGD
+
+from flask_cors import CORS
+
 lemmatizer = WordNetLemmatizer()
 
 
@@ -21,14 +24,14 @@ classes = pickle.load(open("classes.pkl", "rb"))
 
 app = Flask(__name__)
 run_with_ngrok(app) 
+CORS(app)
+# @app.route("/")
+# def home():
+#     return render_template("index.html")
 
-@app.route("/")
-def home():
-    return render_template("index.html")
-
-@app.route("/test")
-def test():
-    return render_template("test.html")
+# @app.route("/test")
+# def test():
+#     return render_template("test.html")
 
 @app.route("/get", methods=["POST"])
 def chatbot_response():
